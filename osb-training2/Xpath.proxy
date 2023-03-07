@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="Mixed" xsi:type="con:MixedBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:request type="XML">
+        <con4:schema ref="osb-training2/Resources/XSDs/InputMath" element="InputMath" xmlns:con4="http://www.bea.com/wli/sb/typesystem/config"/>
+      </con:request>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/osb-training2/Xpath</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-5008522778494197359-ba4d0b6.186bb066a22.-7ae3">
+    <con1:pipeline type="request" name="PipelinePairNode1_request">
+      <con1:stage name="stage1">
+        <con1:context/>
+        <con1:actions>
+          <con2:javaCallout varName="">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7e51</con3:id>
+            <con2:archive ref="osb-training2/Resources/JARs/SimpleLogging"/>
+            <con2:className>id.co.quadras.training.WriteToConsole</con2:className>
+            <con2:method>public static void println(java.lang.String, java.lang.String)</con2:method>
+            <con2:expr>
+              <con3:xqueryText>'DEBUG'</con3:xqueryText>
+            </con2:expr>
+            <con2:expr>
+              <con3:xqueryText>concat('Input Body : ',fn:normalize-space(fn-bea:serialize($body)))</con3:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+          <con2:assign varName="first">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7e31</con3:id>
+            <con2:expr>
+              <con3:xqueryText>xs:int($body/InputMath/FirstNumber/text())</con3:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="secondNumber">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7e07</con3:id>
+            <con2:expr>
+              <con3:xqueryText>xs:int($body/InputMath/SecondNumber/text())</con3:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="mathOperation">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7de9</con3:id>
+            <con2:expr>
+              <con3:xqueryText>$body/InputMath/Operation/text()</con3:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:javaCallout varName="">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7dc8</con3:id>
+            <con2:archive ref="osb-training2/Resources/JARs/SimpleLogging"/>
+            <con2:className>id.co.quadras.training.WriteToConsole</con2:className>
+            <con2:method>public static void println(java.lang.String, java.lang.String)</con2:method>
+            <con2:expr>
+              <con3:xqueryText>'DEBUG'</con3:xqueryText>
+            </con2:expr>
+            <con2:expr>
+              <con3:xqueryText>concat('First Number : ',$firstNumber)</con3:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+          <con2:javaCallout varName="">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7daf</con3:id>
+            <con2:archive ref="osb-training2/Resources/JARs/SimpleLogging"/>
+            <con2:className>id.co.quadras.training.WriteToConsole</con2:className>
+            <con2:method>public static void println(java.lang.String, java.lang.String)</con2:method>
+            <con2:expr>
+              <con3:xqueryText>'DEBUG'</con3:xqueryText>
+            </con2:expr>
+            <con2:expr>
+              <con3:xqueryText>concat('Second Number : ',$secondNumber)</con3:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+          <con2:javaCallout varName="">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7d82</con3:id>
+            <con2:archive ref="osb-training2/Resources/JARs/SimpleLogging"/>
+            <con2:className>id.co.quadras.training.WriteToConsole</con2:className>
+            <con2:method>public static void println(java.lang.String, java.lang.String)</con2:method>
+            <con2:expr>
+              <con3:xqueryText>'DEBUG'</con3:xqueryText>
+            </con2:expr>
+            <con2:expr>
+              <con3:xqueryText>concat('Operation : ',$mathOperation)</con3:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+        </con1:actions>
+      </con1:stage>
+      <con1:stage name="stage2" errorHandler="_onErrorHandler-5008522778494197359-ba4d0b6.186bb066a22.-7b23">
+        <con1:context/>
+        <con1:actions>
+          <con2:ifThenElse>
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7c31</con3:id>
+            <con2:case>
+              <con2:condition>
+                <con3:xqueryText>$mathOperation='ADD'</con3:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="result">
+                  <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7c17</con3:id>
+                  <con2:expr>
+                    <con3:xqueryText>xs:int($firstNumber) + xs:int($secondNumber)</con3:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con3:xqueryText>$mathOperation='SUBSTRACT'</con3:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="result">
+                  <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7be2</con3:id>
+                  <con2:expr>
+                    <con3:xqueryText>xs:int($firstNumber) - xs:int($secondNumber)</con3:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con3:xqueryText>$mathOperation='MULTIPLY'</con3:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="result">
+                  <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7bc3</con3:id>
+                  <con2:expr>
+                    <con3:xqueryText>xs:int($firstNumber) * xs:int($secondNumber)</con3:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con3:xqueryText>$mathOperation='DIVIDE'</con3:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="result">
+                  <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7b84</con3:id>
+                  <con2:expr>
+                    <con3:xqueryText>xs:double($firstNumber) div xs:double($secondNumber)</con3:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:Error>
+                <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7b24</con3:id>
+                <con2:errCode>999</con2:errCode>
+                <con2:message>Invalid Operation</con2:message>
+              </con2:Error>
+            </con2:default>
+          </con2:ifThenElse>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="response" name="PipelinePairNode1_response">
+      <con1:stage name="stage1">
+        <con1:context/>
+        <con1:actions>
+          <con2:javaCallout varName="">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7a81</con3:id>
+            <con2:archive ref="osb-training2/Resources/JARs/SimpleLogging"/>
+            <con2:className>id.co.quadras.training.WriteToConsole</con2:className>
+            <con2:method>public static void println(java.lang.String, java.lang.String)</con2:method>
+            <con2:expr>
+              <con3:xqueryText>'DEBUG'</con3:xqueryText>
+            </con2:expr>
+            <con2:expr>
+              <con3:xqueryText>concat('Result : ',$result)</con3:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="error" name="_onErrorHandler-5008522778494197359-ba4d0b6.186bb066a22.-7b23">
+      <con1:stage name="stage1">
+        <con1:context/>
+        <con1:actions>
+          <con2:javaCallout varName="">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7afe</con3:id>
+            <con2:archive ref="osb-training2/Resources/JARs/SimpleLogging"/>
+            <con2:className>id.co.quadras.training.WriteToConsole</con2:className>
+            <con2:method>public static void println(java.lang.String, java.lang.String)</con2:method>
+            <con2:expr>
+              <con3:xqueryText>'DEBUG'</con3:xqueryText>
+            </con2:expr>
+            <con2:expr>
+              <con3:xqueryText>concat('Error code : ',$fault/ctx:errorCode,', reason :',$fault/ctx:reason)</con3:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+          <con2:Error>
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7ae4</con3:id>
+            <con2:errCode>999</con2:errCode>
+            <con2:message>Failed Error On Math Operation</con2:message>
+          </con2:Error>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:pipeline type="error" name="_onErrorHandler-5008522778494197359-ba4d0b6.186bb066a22.-7ae3">
+      <con1:stage name="stage1">
+        <con1:context/>
+        <con1:actions>
+          <con2:javaCallout varName="">
+            <con3:id>_ActionId-5008522778494197359-ba4d0b6.186bb066a22.-7ac5</con3:id>
+            <con2:archive ref="osb-training2/Resources/JARs/SimpleLogging"/>
+            <con2:className>id.co.quadras.training.WriteToConsole</con2:className>
+            <con2:method>public static void println(java.lang.String, java.lang.String)</con2:method>
+            <con2:expr>
+              <con3:xqueryText>'DEBUG'</con3:xqueryText>
+            </con2:expr>
+            <con2:expr>
+              <con3:xqueryText>concat('Error code : ',$fault/ctx:errorCode,', reason :',$fault/ctx:reason)</con3:xqueryText>
+            </con2:expr>
+          </con2:javaCallout>
+        </con1:actions>
+      </con1:stage>
+    </con1:pipeline>
+    <con1:flow>
+      <con1:pipeline-node name="PipelinePairNode1">
+        <con1:request>PipelinePairNode1_request</con1:request>
+        <con1:response>PipelinePairNode1_response</con1:response>
+      </con1:pipeline-node>
+    </con1:flow>
+  </ser:router>
+</xml-fragment>
