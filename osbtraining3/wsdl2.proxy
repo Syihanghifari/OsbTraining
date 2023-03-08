@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+  <ser:coreEntry isProxy="true" isEnabled="true">
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="osbtraining3/Resources/WSDLs/MathMultiplePortTypeBndPort"/>
+      <con:port>
+        <con:name>MathMultiplePortTypeBndPort</con:name>
+        <con:namespace>http://esb.quadras.co.id/MathMultiple/</con:namespace>
+      </con:port>
+      <con:selector type="SOAP action"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/osbtraining3/wsdl2</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-8523305209258299887--8be5c8c.186c029dee6.-7a1b">
+    <con:pipeline type="request" name="PipelinePairNode1_request">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:javaCallout varName="">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7b9d</con2:id>
+            <con1:archive ref="osbtraining3/Resources/JARs/SimpleLogging"/>
+            <con1:className>id.co.quadras.training.WriteToConsole</con1:className>
+            <con1:method>public static void println(java.lang.String, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>'DEBUG'</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>concat('Input Body : ',fn:normalize-space(fn-bea:serialize($body)))</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con1:assign varName="firstNumber">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7b50</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$body/inputMathMultiple/Input/FirstNumber/text()</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="secondNumber">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7b32</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$body/inputMathMultiple/Input/SecondNumber/text()</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:javaCallout varName="">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7b12</con2:id>
+            <con1:archive ref="osbtraining3/Resources/JARs/SimpleLogging"/>
+            <con1:className>id.co.quadras.training.WriteToConsole</con1:className>
+            <con1:method>public static void println(java.lang.String, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>'DEBUG'</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>concat('First Number : ',$firstNumber)</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con1:javaCallout varName="">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7b14</con2:id>
+            <con1:archive ref="osbtraining3/Resources/JARs/SimpleLogging"/>
+            <con1:className>id.co.quadras.training.WriteToConsole</con1:className>
+            <con1:method>public static void println(java.lang.String, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>'DEBUG'</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>concat('Second Number : ',$secondNumber)</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+        </con:actions>
+      </con:stage>
+      <con:stage name="stage2">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="missingMandatoryField">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7aa0</con2:id>
+            <con1:expr>
+              <con2:xqueryText>if(fn:string-length(fn-bea:trim($firstNumber))=0) then
+	 'firstNumber'
+else if(fn:string-length(fn-bea:trim($secondNumber))=0) then
+	 'secondNumber'
+else
+	''</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:javaCallout varName="">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7a9e</con2:id>
+            <con1:archive ref="osbtraining3/Resources/JARs/SimpleLogging"/>
+            <con1:className>id.co.quadras.training.WriteToConsole</con1:className>
+            <con1:method>public static void println(java.lang.String, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>'DEBUG'</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>concat('Missing Mandatory Field : ',$missingMandatoryField)</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7a82</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>fn:string-length($missingMandatoryField)>0</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7a1c</con2:id>
+                  <con1:errCode>999</con1:errCode>
+                  <con1:message>Missing mandatory field</con1:message>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode1_response">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:javaCallout varName="">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7b10</con2:id>
+            <con1:archive ref="osbtraining3/Resources/JARs/SimpleLogging"/>
+            <con1:className>id.co.quadras.training.WriteToConsole</con1:className>
+            <con1:method>public static void println(java.lang.String, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>'DEBUG'</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>concat('Result : ',$result)</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con1:assign varName="newBody">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7afc</con2:id>
+            <con1:expr>
+              <con2:xqueryText><![CDATA[<outputMathMultiple>
+	<Output>
+    	<ErrorSchema>
+        	<ErrorCode>000</ErrorCode>
+        	<ErrorMessage>Success</ErrorMessage>
+    	</ErrorSchema>
+    	<OutputSchema>
+    		<Result>{$result}</Result>
+    	</OutputSchema>
+   	</Output>
+</outputMathMultiple>]]></con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7ae6</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$newBody</con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:javaCallout varName="">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7ae4</con2:id>
+            <con1:archive ref="osbtraining3/Resources/JARs/SimpleLogging"/>
+            <con1:className>id.co.quadras.training.WriteToConsole</con1:className>
+            <con1:method>public static void println(java.lang.String, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>'DEBUG'</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>concat('Output Body : ',fn:normalize-space(fn-bea:serialize($body)))</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con2:reply>
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7ac5</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="request" name="PipelinePairNode2_request">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="result">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7c27</con2:id>
+            <con1:expr>
+              <con2:xqueryText>xs:int($firstNumber) + xs:int($secondNumber)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode2_response"/>
+    <con:pipeline type="request" name="PipelinePairNode3_request">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="result">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7be4</con2:id>
+            <con1:expr>
+              <con2:xqueryText>xs:int($firstNumber) - xs:int($secondNumber)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode3_response"/>
+    <con:pipeline type="request" name="PipelinePairNode4_request">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="result">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7bd6</con2:id>
+            <con1:expr>
+              <con2:xqueryText>xs:int($firstNumber) * xs:int($secondNumber)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode4_response"/>
+    <con:pipeline type="request" name="PipelinePairNode5_request">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="result">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7bbd</con2:id>
+            <con1:expr>
+              <con2:xqueryText>xs:double($firstNumber) div xs:double($secondNumber)</con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode5_response"/>
+    <con:pipeline type="error" name="_onErrorHandler-8523305209258299887--8be5c8c.186c029dee6.-7a1b">
+      <con:stage name="stage1">
+        <con:context/>
+        <con:actions>
+          <con1:assign varName="newBody">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-7a05</con2:id>
+            <con1:expr>
+              <con2:xqueryText><![CDATA[<outputMathMultiple>
+	<Output>
+    	<ErrorSchema>
+        	<ErrorCode>000</ErrorCode>
+        	<ErrorMessage>Success</ErrorMessage>
+    	</ErrorSchema>
+    	<OutputSchema>
+    		<Result>{$result}</Result>
+    	</OutputSchema>
+   	</Output>
+</outputMathMultiple>]]></con2:xqueryText>
+            </con1:expr>
+          </con1:assign>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-79f4</con2:id>
+            <con1:expr>
+              <con2:xqueryText>$newBody</con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:javaCallout varName="">
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-79f1</con2:id>
+            <con1:archive ref="osbtraining3/Resources/JARs/SimpleLogging"/>
+            <con1:className>id.co.quadras.training.WriteToConsole</con1:className>
+            <con1:method>public static void println(java.lang.String, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>'DEBUG'</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>concat('Output Body : ',fn:normalize-space(fn-bea:serialize($body)))</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con2:reply>
+            <con2:id>_ActionId-8523305209258299887--8be5c8c.186c029dee6.-79ce</con2:id>
+          </con2:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode1">
+        <con:request>PipelinePairNode1_request</con:request>
+        <con:response>PipelinePairNode1_response</con:response>
+      </con:pipeline-node>
+      <con:branch-node type="operation" name="BranchNode1">
+        <con:context/>
+        <con:branch-table>
+          <con:branch name="Add">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairNode2">
+                <con:request>PipelinePairNode2_request</con:request>
+                <con:response>PipelinePairNode2_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="Substract">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairNode3">
+                <con:request>PipelinePairNode3_request</con:request>
+                <con:response>PipelinePairNode3_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="Multiply">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairNode4">
+                <con:request>PipelinePairNode4_request</con:request>
+                <con:response>PipelinePairNode4_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="Multiply">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:pipeline-node name="PipelinePairNode5">
+                <con:request>PipelinePairNode5_request</con:request>
+                <con:response>PipelinePairNode5_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:default-branch>
+            <con:flow/>
+          </con:default-branch>
+        </con:branch-table>
+      </con:branch-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>
