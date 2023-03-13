@@ -1,0 +1,10 @@
+#Mon Mar 13 11:07:17 ICT 2023
+ACTIVATION_DESCRIPTION_PROPERTY=Publish from Oracle Service Bus IDE.
+CUSTOMIZATION_FILE_PROPERTY=
+DISCARD_SESSION_PROPERTY=true
+KEYSTORE_PROPERTYfile=
+KEYSTORE_PROPERTYpassword=
+PUBLISH_SESSION_NAME_PROPERTY=OSB_Publish
+SERVER_PROPERTY=
+container.referenced.projects=TrainingDay1|osbtraining3|osbtraining4|TrainingDay4|TrainingDay2|osb-training2|TrainingDay3|
+eclipse.preferences.version=1
